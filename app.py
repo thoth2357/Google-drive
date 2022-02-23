@@ -3,6 +3,7 @@ import functools
 import json
 import os
 
+
 import flask
 from flask_cors import CORS
 
@@ -29,6 +30,10 @@ app.register_blueprint(drive_google_auth.app)
 # app.register_blueprint(drive_google.app)
 
 
+
+@app.route('/')
+def root():
+    return flask.redirect(f'{os.getenv("FN_BASE_URI")}/login')
 
 @app.route('/api/')
 def index():

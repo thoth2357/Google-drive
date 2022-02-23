@@ -20,6 +20,7 @@ AUTH_TOKEN_KEY = 'auth_token'
 AUTH_STATE_KEY = 'auth_state'
 
 
+
 app = flask.Blueprint('drive_google_auth', __name__)
 CORS(app)
 
@@ -103,7 +104,9 @@ def google_auth_redirect():
         flask.session[AUTH_TOKEN_KEY] = oauth2_tokens
     except KeyError:
         return "Login state not found"
-    url_token = f'{flask.session["BASE_URI"]}/?token={oauth2_tokens["refresh_token"]}'
+    token = oauth2_tokens["refresh_token"]
+    # token_encrypt = fernet.encrypt(token.encode())
+    url_token = f'{flask.session["BASE_URI"]}/?token={token}'
     return flask.redirect(url_token, code=302)
 
 @app.route('/api/logout')
