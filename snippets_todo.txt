@@ -1,0 +1,16 @@
+def create_folder_in_folder(folder_name,parent_folder_id):
+    
+    file_metadata = {
+    'name' : folder_name,
+    'parents' : [folder_id],
+    'mimeType' : 'application/vnd.google-apps.folder'
+    }
+
+    file = drive_service.files().create(body=file_metadata,
+                                    fields='id').execute()
+    
+    print ('Folder ID: %s' % file.get('id'))
+
+
+
+    http://127.0.0.1:8080/hordanso-google/login?id=177314386585-lebv37p723ls51bkq8e4ak1s118odl1k.apps.googleusercontent.com&secret=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
