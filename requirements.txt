@@ -1,0 +1,8 @@
+flask==2.0.2
+flask_cors==3.0.10
+requests==2.27.1
+authlib==0.15.5
+google-auth==2.6.0
+google-api-python-client==2.37.0
+python-dotenv==0.19.2
+

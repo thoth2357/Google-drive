@@ -58,7 +58,7 @@ def no_cache(view):
 
     return functools.update_wrapper(no_cache_impl, view)
 
-@app.route('/hordanso-google/login')
+@app.route('/api/login')
 @no_cache
 @cross_origin()
 def login():
@@ -103,11 +103,10 @@ def google_auth_redirect():
         flask.session[AUTH_TOKEN_KEY] = oauth2_tokens
     except KeyError:
         return "Login state not found"
-    test = f'{flask.session["BASE_URI"]}/?token={oauth2_tokens["refresh_token"]}'
-    print('test', test)
-    return flask.redirect(test, code=302)
+    url_token = f'{flask.session["BASE_URI"]}/?token={oauth2_tokens["refresh_token"]}'
+    return flask.redirect(url_token, code=302)
 
-@app.route('/hordanso-google/logout')
+@app.route('/api/logout')
 @no_cache
 @cross_origin()
 def logout():

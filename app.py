@@ -30,11 +30,10 @@ app.register_blueprint(drive_google_auth.app)
 
 
 
-@app.route('/hordanso-google/')
+@app.route('/api/')
 def index():
     try:
         token = flask.request.args.get('token')
-        print('token am here', token)
         if drive_google_auth.is_logged_in():
             user_info = drive_google_auth.get_user_info(token)
             return '<div>You are currently logged in as ' + user_info['given_name'] + '<div><pre>' + json.dumps(user_info, indent=4) + "</pre>"
@@ -42,7 +41,7 @@ def index():
     except KeyError:
         return 'You are not currently logged in.' 
 
-@app.route('/hordanso-google/list-files', methods=['GET'])
+@app.route('/api/list-files', methods=['GET'])
 def list_drive_file():
     token = flask.request.args.get('access_token')
     files_dict = {}
@@ -51,7 +50,7 @@ def list_drive_file():
         files_dict.update({file['name']: file['mimeType']})
     return json.dumps(files_dict)
 
-@app.route('/hordanso-google/create-folder', methods=['POST', 'GET'])
+@app.route('/api/create-folder', methods=['POST', 'GET'])
 def create_drive_folder():
     token = flask.request.args.get('token')
     folder_name = flask.request.args.get('folder-name')
@@ -62,7 +61,7 @@ def create_drive_folder():
     id = drive_google.build_drive_api_v3(token).files().create(body=file_metadata, fields='id').execute()
     return id if id != None else 'Folder couldnt be created'
 
-@app.route('/hordanso-google/upload-files', methods=['POST'])
+@app.route('/api/upload-files', methods=['POST'])
 def upload_file():
 
     if flask.request.method == 'POST':
